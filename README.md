@@ -1,22 +1,19 @@
 # fruit_hub_dashboard
 
-## Cloudinary image uploads
+## Supabase image uploads
 
-Create an **unsigned** upload preset in Cloudinary, then start the app with your
-Cloudinary cloud name and preset name:
+Create a public Supabase Storage bucket named `product-images`, then start the
+app with your project URL and anon key:
 
 ```text
-flutter run --dart-define=CLOUDINARY_CLOUD_NAME=your_cloud_name --dart-define=CLOUDINARY_UPLOAD_PRESET=your_unsigned_preset
+flutter run --dart-define=SUPABASE_URL=https://your-project.supabase.co --dart-define=SUPABASE_PUBLISHABLE_KEY=your_publishable_key
 ```
 
-Use the values when constructing the image repository:
+To use another bucket name, also pass:
 
-```dart
-final imagesRepo = ImagesRepoImpl(
-	cloudName: CloudinaryConfig.cloudName,
-	uploadPreset: CloudinaryConfig.uploadPreset,
-);
+```text
+--dart-define=SUPABASE_IMAGE_BUCKET=your_bucket_name
 ```
 
-`uploadImage` returns the Cloudinary `secure_url`. Save that URL with the
-product record rather than uploading the local file to your database.
+`uploadImage` returns the Supabase public URL. Save that URL with the product
+record rather than uploading the local file to your database.

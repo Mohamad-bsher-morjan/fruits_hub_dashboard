@@ -29,8 +29,8 @@ class _ImageFieldState extends State<ImageField> {
 
           try {
             await pickImage();
-          } catch (e) {
-            print(e);
+          } catch (_) {
+            // Image picking failed; the UI already handles empty state.
           }
 
           setState(() {
