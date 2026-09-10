@@ -8,27 +8,31 @@ class CustomTextFormField extends StatelessWidget {
     required this.textInputType,
     this.suffixIcon,
     this.onSaved,
+    this.validator,
     this.obscureText = false,
-    this.maxLines=1,
+    this.maxLines = 1,
   });
   final String hintText;
   final int? maxLines;
   final TextInputType textInputType;
   final Widget? suffixIcon;
   final void Function(String?)? onSaved;
+  final FormFieldValidator<String>? validator;
   final bool obscureText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLines:maxLines ,
+      maxLines: maxLines,
       obscureText: obscureText,
       onSaved: onSaved,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'هذا الحقل مطلوب';
-        }
-        return null;
-      },
+      validator:
+          validator ??
+          (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'This field is required';
+            }
+            return null;
+          },
       keyboardType: textInputType,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,

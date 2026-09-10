@@ -33,6 +33,9 @@ class _ImageFieldState extends State<ImageField> {
             // Image picking failed; the UI already handles empty state.
           }
 
+          if (!mounted) {
+            return;
+          }
           setState(() {
             isLoading = false;
           });
@@ -81,6 +84,9 @@ class _ImageFieldState extends State<ImageField> {
       return;
     }
 
+    if (!mounted) {
+      return;
+    }
     fileImage = File(image.path);
 
     widget.onFileChanged(fileImage);

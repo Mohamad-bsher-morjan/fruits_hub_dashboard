@@ -1,10 +1,8 @@
 class SupabaseConfig {
-  static const url = String.fromEnvironment('SUPABASE_URL');
-  static const publishableKey = String.fromEnvironment(
-    'SUPABASE_PUBLISHABLE_KEY',
-  );
-  static const imageBucket = String.fromEnvironment(
-    'SUPABASE_IMAGE_BUCKET',
-    defaultValue: 'product-images',
-  );
+  static const url = 'https://uubrndhwelsvonekenva.supabase.co';
+
+  static const publishableKey =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1YnJuZGh3ZWxzdm9uZWtlbnZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NzU5NTIsImV4cCI6MjEwNDU1MTk1Mn0.svLy9vMWVb8MqLsCnMCLVcYmdtKBJ066k75p8iee9tM';
+
+  static const imageBucket = 'product_images';
 }

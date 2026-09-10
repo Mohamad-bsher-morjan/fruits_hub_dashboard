@@ -9,7 +9,7 @@ import 'package:fruit_hub_dashboard/features/add_product/domain/entities/add_pro
 class ProductRepoImpl implements ProductRepo {
   final DatabaseService databaseService;
 
-  new({required this.databaseService});
+  ProductRepoImpl(this.databaseService);
   @override
   Future<Either<Failure, void>> addProduct(
     AddProductInputEntity addProductInputEntity,
@@ -22,7 +22,7 @@ class ProductRepoImpl implements ProductRepo {
       );
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure(errMessage: 'Failed to add product'));
+      return Left(ServerFailure(errMessage: e.toString()));
     }
   }
 }
