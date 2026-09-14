@@ -9,6 +9,7 @@ import 'package:fruit_hub_dashboard/features/add_product/domain/entities/add_pro
 import 'package:fruit_hub_dashboard/features/add_product/presentation/cubits/add_product/add_product_cubit.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/views/widgets/image_field.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/views/widgets/is_featured_chek_box.dart';
+import 'package:fruit_hub_dashboard/features/add_product/presentation/views/widgets/is_organic_check_box.dart';
 
 class AddProductViewBody extends StatefulWidget {
   const new({super.key});
@@ -22,8 +23,10 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   late String name, code, description;
-  late num price;
+  late num price, expirationsMonths, numberOfCalories, unitAmount;
+
   File? image;
+  bool isOrganic = false;
   bool isFeatured = false;
   @override
   Widget build(BuildContext context) {
@@ -61,6 +64,34 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                 },
               ),
               SizedBox(height: 16),
+              CustomTextFormField(
+                onSaved: (p0) {
+                  expirationsMonths = num.parse(p0!);
+                },
+                hintText: 'Expiration Months',
+                textInputType: TextInputType.text,
+              ),
+
+              SizedBox(height: 16),
+
+              CustomTextFormField(
+                onSaved: (p0) {
+                  numberOfCalories = num.parse(p0!);
+                },
+                hintText: 'Number Of Calories',
+                textInputType: TextInputType.text,
+              ),
+
+              SizedBox(height: 16),
+              CustomTextFormField(
+                onSaved: (p0) {
+                  unitAmount = num.parse(p0!);
+                },
+                hintText: 'Unit Amount',
+                textInputType: TextInputType.text,
+              ),
+
+              SizedBox(height: 16),
 
               CustomTextFormField(
                 onSaved: (p0) {
@@ -78,6 +109,12 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                 hintText: 'Product Description',
                 maxLines: 5,
                 textInputType: TextInputType.text,
+              ),
+              SizedBox(height: 16),
+              IsOrganicCheckBox(
+                onChanged: (value) {
+                  isOrganic = value;
+                },
               ),
               SizedBox(height: 16),
               IsFeaturedCheckBox(
@@ -106,15 +143,19 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                             if (image != null) {
                               if (formKey.currentState!.validate()) {
                                 formKey.currentState!.save();
-                                AddProductInputEntity input =
-                                    AddProductInputEntity(
-                                      name: name,
-                                      code: code,
-                                      description: description,
-                                      price: price,
-                                      image: image!,
-                                      isFeatured: isFeatured,
-                                    );
+                                AddProductInputEntity
+                                input = AddProductInputEntity(
+                                  name: name,
+                                  code: code,
+                                  isOrganic: isOrganic,
+                                  description: description,
+                                  price: price,
+                                  image: image!,
+                                  isFeatured: isFeatured,
+                                  expirationsMonths: expirationsMonths.toInt(),
+                                  numberOfCalories: numberOfCalories.toInt(),
+                                  unitAmount: unitAmount.toInt(),
+                                );
 
                                 context.read<AddProductCubit>().addProduct(
                                   input,
