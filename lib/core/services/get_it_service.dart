@@ -11,7 +11,7 @@ import 'package:fruit_hub_dashboard/core/services/supa_storage.dart';
 final getIt = GetIt.instance;
 
 void setupGetIt() {
-  getIt.registerLazySingleton<StorageService>(() => SupabaseStorage());
+  getIt.registerLazySingleton<StorageService>(() => SupabaseStorageService());
   getIt.registerLazySingleton<DatabaseService>(() => FireStoreService());
   getIt.registerLazySingleton<ImagesRepo>(
     () => ImagesRepoImpl(storageService: getIt<StorageService>()),

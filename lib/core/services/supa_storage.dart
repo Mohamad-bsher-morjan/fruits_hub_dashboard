@@ -1,30 +1,58 @@
 import 'dart:io';
 
-import 'package:fruit_hub_dashboard/core/repos/images_repo/supabase_config.dart';
+import 'package:fruit_hub_dashboard/constants.dart';
 import 'package:fruit_hub_dashboard/core/services/storage_service.dart';
-import 'package:path/path.dart' as b;
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SupabaseStorage implements StorageService {
-  final storage = Supabase.instance.client.storage;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:path/path.dart' as b;
+
+class SupabaseStorageService implements StorageService {
+  static late Supabase _supabase;
+
+  static Future<void> createBuckets(String bucketName) async {
+    var buckets = await _supabase.client.storage.listBuckets();
+
+    bool isBucketExists = false;
+    for (var bucket in buckets) {
+      if (bucket.id == bucketName) {
+        isBucketExists = true;
+        break;
+      }
+    }
+
+    if (!isBucketExists) {
+      await _supabase.client.storage.createBucket(bucketName);
+    }
+  }
+
+  static Future<void> initSupabaseStorage() async {
+    _supabase = await Supabase.initialize(
+      url: kSupabaseUrl,
+      publishableKey: kSupabaseKey,
+    );
+  }
 
   @override
   Future<String> uploadFile(File file, String path) async {
-    final fileName = b.basename(file.path);
-    final folder = path.trim();
-    final uniqueFileName = '${DateTime.now().microsecondsSinceEpoch}_$fileName';
-    final filePath = folder.isEmpty
-        ? 'images/$uniqueFileName'
-        : '$folder/$uniqueFileName';
+    String fileName = b.basenameWithoutExtension(file.path);
+    String extensionName = b.extension(file.path);
 
-    await storage
-        .from(SupabaseConfig.imageBucket)
-        .upload(filePath, file, fileOptions: const FileOptions(upsert: false));
+    String finalFileName;
 
-    final fileUrl = storage
-        .from(SupabaseConfig.imageBucket)
-        .getPublicUrl(filePath);
+    if (extensionName.isEmpty) {
+      finalFileName = fileName;
+    } else {
+      finalFileName = '$fileName$extensionName';
+    }
 
-    return fileUrl;
+    await _supabase.client.storage
+        .from(kImageBucket)
+        .upload('$path/$finalFileName', file);
+
+    final String publicUrl = _supabase.client.storage
+        .from(kImageBucket)
+        .getPublicUrl('$path/$finalFileName');
+
+    return publicUrl;
   }
 }

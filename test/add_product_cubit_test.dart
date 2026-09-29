@@ -46,6 +46,10 @@ void main() {
       price: 2,
       image: File('apple.jpg'),
       isFeatured: true,
+      reviews: const [],
+      expirationsMonths: 1,
+      numberOfCalories: 95,
+      unitAmount: 1,
     );
 
     final submission = cubit.addProduct(product);
