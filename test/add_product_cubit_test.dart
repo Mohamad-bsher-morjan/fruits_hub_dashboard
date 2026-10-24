@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fruit_hub_dashboard/core/errors/failure.dart';
 import 'package:fruit_hub_dashboard/core/repos/images_repo/images_repo.dart';
 import 'package:fruit_hub_dashboard/core/repos/product_repo/product_repo.dart';
-import 'package:fruit_hub_dashboard/features/add_product/domain/entities/add_product_input_entity.dart';
+import 'package:fruit_hub_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/cubits/add_product/add_product_cubit.dart';
 
 class _SuccessfulImagesRepo implements ImagesRepo {
@@ -24,7 +24,7 @@ class _DelayedProductRepo implements ProductRepo {
 
   @override
   Future<Either<Failure, void>> addProduct(
-    AddProductInputEntity addProductInputEntity,
+    ProductEntity addProductInputEntity,
   ) async {
     await completion.future;
     return const Right(null);
@@ -39,7 +39,7 @@ void main() {
       imagesRepo: imagesRepo,
       productRepo: productRepo,
     );
-    final product = AddProductInputEntity(
+    final product = ProductEntity(
       name: 'Apple',
       code: 'apple',
       description: 'Fresh apple',

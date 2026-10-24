@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:fruit_hub_dashboard/features/add_product/domain/entities/review_entity.dart';
 
-class AddProductInputEntity {
+class ProductEntity {
   final String name;
   final String code;
   final String description;

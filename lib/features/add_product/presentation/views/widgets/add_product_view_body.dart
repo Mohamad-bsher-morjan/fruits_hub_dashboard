@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruit_hub_dashboard/core/widgets/custom_button.dart';
 import 'package:fruit_hub_dashboard/core/widgets/custom_snack_bar.dart';
 import 'package:fruit_hub_dashboard/core/widgets/custom_text_field.dart';
-import 'package:fruit_hub_dashboard/features/add_product/domain/entities/add_product_input_entity.dart';
+import 'package:fruit_hub_dashboard/features/add_product/domain/entities/product_entity.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/cubits/add_product/add_product_cubit.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/views/widgets/image_field.dart';
 import 'package:fruit_hub_dashboard/features/add_product/presentation/views/widgets/is_featured_chek_box.dart';
@@ -143,8 +143,8 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                             if (image != null) {
                               if (formKey.currentState!.validate()) {
                                 formKey.currentState!.save();
-                                AddProductInputEntity
-                                input = AddProductInputEntity(
+                                ProductEntity
+                                input = ProductEntity(
                                   name: name,
                                   code: code,
                                   isOrganic: isOrganic,
