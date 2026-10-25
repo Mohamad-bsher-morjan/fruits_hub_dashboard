@@ -17,7 +17,7 @@ class ProductModel {
   final num avgRating = 0;
   final num ratingCount = 0;
   final int unitAmount;
-  final int sellingCount;
+  final num sellingCount;
   final List<ReviewModel> reviews;
 
   ProductModel({
