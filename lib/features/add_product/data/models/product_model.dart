@@ -17,6 +17,7 @@ class ProductModel {
   final num avgRating = 0;
   final num ratingCount = 0;
   final int unitAmount;
+  final int sellingCount;
   final List<ReviewModel> reviews;
 
   ProductModel({
@@ -32,6 +33,7 @@ class ProductModel {
     required this.unitAmount,
     required this.reviews,
     this.imageUrl,
+    this.sellingCount = 0,
   });
 
   factory ProductModel.fromEntity(ProductEntity entity) {
@@ -55,6 +57,7 @@ class ProductModel {
     return {
       'name': name,
       'code': code,
+      'sellingCount' : sellingCount,
       'description': description,
       'price': price,
       'isFeatured': isFeatured,
