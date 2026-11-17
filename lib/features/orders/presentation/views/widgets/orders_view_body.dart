@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fruit_hub_dashboard/core/helper_functions/get_order_dummy_data.dart';
 import 'package:fruit_hub_dashboard/features/orders/presentation/views/widgets/filter_section.dart';
+import 'package:fruit_hub_dashboard/features/orders/presentation/views/widgets/order_item.dart';
 
 class OrdersViewBody extends StatelessWidget {
-  const new({super.key});
+  const OrdersViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +12,9 @@ class OrdersViewBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          SizedBox(height: 24,),
+          SizedBox(height: 12,),
           FilterSection(),
+          OrderItemWidget(orderModel:getDummyOrder()),
           
         ],
       ),

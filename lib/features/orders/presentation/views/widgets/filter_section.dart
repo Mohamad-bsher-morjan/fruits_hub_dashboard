@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FilterSection extends StatelessWidget {
-  const new({super.key});
+  const FilterSection({super.key});
 
   @override
   Widget build(BuildContext context) {
