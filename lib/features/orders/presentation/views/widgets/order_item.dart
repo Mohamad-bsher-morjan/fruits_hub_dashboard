@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fruit_hub_dashboard/features/orders/data/models/order_model.dart';
+import 'package:fruit_hub_dashboard/features/orders/domain/entities/order_entity.dart';
 
 class OrderItemWidget extends StatelessWidget {
-  final OrderModel orderModel;
+  final OrderEntity orderModel;
 
   const OrderItemWidget({super.key, required this.orderModel});
 
@@ -21,7 +21,7 @@ class OrderItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final address = orderModel.shippingAddress;
+    final address = orderModel.shippingAddressModel;
     return Card(
       elevation: 4,
       child: Padding(

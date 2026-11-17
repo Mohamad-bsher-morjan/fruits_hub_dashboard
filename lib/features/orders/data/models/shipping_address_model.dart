@@ -1,3 +1,4 @@
+import 'package:fruit_hub_dashboard/features/orders/domain/entities/shipping_address_entity.dart';
 
 class ShippingAddressModel {
   String? name;
@@ -32,5 +33,15 @@ class ShippingAddressModel {
       'phone': phone,
       'email': email,
     };
+  }
+
+   ShippingAddressEntity toEntity() {
+    return ShippingAddressEntity(
+      name: name,
+      phone: phone,
+      address: address,
+      city: city,
+      email: email,
+    );
   }
 }

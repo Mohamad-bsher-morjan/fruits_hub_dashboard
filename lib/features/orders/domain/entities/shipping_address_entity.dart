@@ -1,5 +1,10 @@
+
 class ShippingAddressEntity {
-  String? name, address, city, phone, email;
+  String? name;
+  String? address;
+  String? city;
+  String? phone;
+  String? email;
 
   ShippingAddressEntity({
     this.name,
@@ -8,8 +13,6 @@ class ShippingAddressEntity {
     this.phone,
     this.email,
   });
-  @override
-  String toString() {
-    return '$address _$city';
-  }
+
+ 
 }

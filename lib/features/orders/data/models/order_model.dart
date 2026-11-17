@@ -1,12 +1,13 @@
 import 'package:fruit_hub_dashboard/features/orders/data/models/order_product_model.dart';
 import 'package:fruit_hub_dashboard/features/orders/data/models/shipping_address_model.dart';
+import 'package:fruit_hub_dashboard/features/orders/domain/entities/order_entity.dart';
 
-enum OrderStatus { pending, accepted, rejected, delivered }
+
 
 class OrderModel {
   final double totalPrice;
   final String uId;
-  final ShippingAddressModel shippingAddress;
+  final ShippingAddressModel shippingAddressModel;
   final List<OrderProductModel> orderProducts;
   final String paymentMethod;
   final OrderStatus status;
@@ -14,7 +15,7 @@ class OrderModel {
   OrderModel({
     required this.totalPrice,
     required this.uId,
-    required this.shippingAddress,
+    required this.shippingAddressModel,
     required this.orderProducts,
     required this.paymentMethod,
     this.status = OrderStatus.pending,
@@ -24,7 +25,7 @@ class OrderModel {
     return OrderModel(
       totalPrice: map['totalPrice']?.toDouble() ?? 0.0,
       uId: map['uId'] ?? '',
-      shippingAddress: ShippingAddressModel.fromMap(map['shippingAddress']),
+      shippingAddressModel: ShippingAddressModel.fromMap(map['shippingAddress']),
       orderProducts: List<OrderProductModel>.from(
         (map['orderProducts'] as List<dynamic>).map<OrderProductModel>(
           (x) => OrderProductModel.fromMap(x),
@@ -44,9 +45,20 @@ class OrderModel {
       'uId': uId,
       'status': status.name,
       'date': DateTime.now().toString(),
-      'shippingAddress': shippingAddress.toMap(),
+      'shippingAddress': shippingAddressModel.toMap(),
       'orderProducts': orderProducts.map((x) => x.toMap()).toList(),
       'paymentMethod': paymentMethod,
     };
+  }
+
+  OrderEntity toEntity() {
+    return OrderEntity(
+      totalPrice: totalPrice,
+      uId: uId,
+      shippingAddressModel: shippingAddressModel.toEntity(),
+      orderProducts: orderProducts.map((x) => x.toEntity()).toList(),
+      paymentMethod: paymentMethod,
+      status: status  ,
+    );
   }
 }
