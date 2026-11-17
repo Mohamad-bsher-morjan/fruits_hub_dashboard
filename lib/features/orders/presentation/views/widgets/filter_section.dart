@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+
+class FilterSection extends StatelessWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        
+      },
+      child: Row(
+        children: [
+          Icon(Icons.filter),
+          SizedBox(width: 16),
+      
+          Text('Filter', style: TextStyle(fontSize: 24)),
+        ],
+      ),
+    );
+  }
+}

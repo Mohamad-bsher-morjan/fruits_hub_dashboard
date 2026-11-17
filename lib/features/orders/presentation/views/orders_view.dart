@@ -6,6 +6,9 @@ class OrdersView extends StatelessWidget {
   static const routeName = 'orders';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: OrdersViewBody());
+    return Scaffold(
+      appBar: AppBar(centerTitle: true, title: Text('Orders')),
+      body: OrdersViewBody(),
+    );
   }
 }
