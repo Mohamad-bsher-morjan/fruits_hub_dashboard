@@ -3,7 +3,6 @@ import 'package:fruit_hub_dashboard/features/orders/data/models/order_product_mo
 import 'package:fruit_hub_dashboard/features/orders/data/models/shipping_address_model.dart';
 
 OrderModel getDummyOrder() {
-  // Create a sample shipping address
   ShippingAddressModel shippingAddress = ShippingAddressModel(
     name: 'John Doe',
     phone: '123-456-7890',
@@ -39,13 +38,11 @@ OrderModel getDummyOrder() {
     ),
   ];
 
-  // Calculate total price
   double totalPrice = orderProducts.fold(
     0,
     (sum, product) => sum + (product.price * product.quantity),
   );
 
-  // Create and return the OrderModel
   return OrderModel(
     totalPrice: totalPrice,
     uId: 'user123',
