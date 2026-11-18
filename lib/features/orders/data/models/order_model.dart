@@ -2,8 +2,6 @@ import 'package:fruit_hub_dashboard/features/orders/data/models/order_product_mo
 import 'package:fruit_hub_dashboard/features/orders/data/models/shipping_address_model.dart';
 import 'package:fruit_hub_dashboard/features/orders/domain/entities/order_entity.dart';
 
-
-
 class OrderModel {
   final double totalPrice;
   final String uId;
@@ -23,14 +21,15 @@ class OrderModel {
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      totalPrice: map['totalPrice']?.toDouble() ?? 0.0,
-      uId: map['uId'] ?? '',
-      shippingAddressModel: ShippingAddressModel.fromMap(map['shippingAddress']),
-      orderProducts: List<OrderProductModel>.from(
-        (map['orderProducts'] as List<dynamic>).map<OrderProductModel>(
-          (x) => OrderProductModel.fromMap(x),
-        ),
+      totalPrice: map['totalPrice'],
+      uId: map['uId'],
+      shippingAddressModel: ShippingAddressModel.fromMap(
+        map['shippingAddress'],
       ),
+      orderProducts: List<OrderProductModel>.from(
+        map['orderProducts'].map((e) => OrderProductModel.fromMap(e)),
+      ),
+
       paymentMethod: map['paymentMethod'] ?? '',
       status: OrderStatus.values.firstWhere(
         (status) => status.name == map['status'],
@@ -58,7 +57,7 @@ class OrderModel {
       shippingAddressModel: shippingAddressModel.toEntity(),
       orderProducts: orderProducts.map((x) => x.toEntity()).toList(),
       paymentMethod: paymentMethod,
-      status: status  ,
+      status: status,
     );
   }
 }

@@ -18,7 +18,7 @@ class OrdersRepoImpl extends OrdersRepo {
       );
 
       List<OrderEntity> orders = (data as List<dynamic>)
-          .map((e) => OrderModel.fromMap(e).toEntity())
+          .map<OrderEntity>((e) => OrderModel.fromMap(e).toEntity())
           .toList();
       return Right(orders);
     } catch (e) {
