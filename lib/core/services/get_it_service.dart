@@ -2,6 +2,8 @@ import 'package:fruit_hub_dashboard/core/repos/product_repo/product_repo.dart';
 import 'package:fruit_hub_dashboard/core/repos/product_repo/product_repo_impl.dart';
 import 'package:fruit_hub_dashboard/core/services/data_service.dart';
 import 'package:fruit_hub_dashboard/core/services/firestore_service.dart';
+import 'package:fruit_hub_dashboard/features/orders/data/repos/orders_repo_impl.dart';
+import 'package:fruit_hub_dashboard/features/orders/domain/repos/orders_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'package:fruit_hub_dashboard/core/repos/images_repo/images_repo.dart';
 import 'package:fruit_hub_dashboard/core/repos/images_repo/images_repo_impl.dart';
@@ -18,5 +20,8 @@ void setupGetIt() {
   );
   getIt.registerLazySingleton<ProductRepo>(
     () => ProductRepoImpl(getIt<DatabaseService>()),
+  );
+  getIt.registerLazySingleton<OrdersRepo>(
+    () => OrdersRepoImpl(databaseService: getIt<FireStoreService>()),
   );
 }
