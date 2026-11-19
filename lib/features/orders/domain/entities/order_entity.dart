@@ -1,7 +1,7 @@
+import 'package:fruit_hub_dashboard/core/enums/order_enum.dart';
 import 'package:fruit_hub_dashboard/features/orders/domain/entities/order_product_entity.dart';
 import 'package:fruit_hub_dashboard/features/orders/domain/entities/shipping_address_entity.dart';
 
-enum OrderStatus { pending, accepted, rejected, delivered }
 
 class OrderEntity {
   final double totalPrice;
@@ -9,7 +9,7 @@ class OrderEntity {
   final ShippingAddressEntity shippingAddressModel;
   final List<OrderProductEntity> orderProducts;
   final String paymentMethod;
-  final OrderStatus status;
+  final OrderEnum status;
 
   OrderEntity({
     required this.totalPrice,
@@ -17,7 +17,7 @@ class OrderEntity {
     required this.shippingAddressModel,
     required this.orderProducts,
     required this.paymentMethod,
-    this.status = OrderStatus.pending,
+    required this.status
   });
 
  

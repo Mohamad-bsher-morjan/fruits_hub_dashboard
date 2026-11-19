@@ -1,27 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fruit_hub_dashboard/core/enums/order_enum.dart';
 import 'package:fruit_hub_dashboard/features/orders/domain/entities/order_entity.dart';
+
 
 class OrderItemWidget extends StatelessWidget {
   final OrderEntity orderModel;
 
   const OrderItemWidget({super.key, required this.orderModel});
 
-  Color _statusColor(OrderStatus status) {
-    switch (status) {
-      case OrderStatus.accepted:
-        return Colors.green;
-      case OrderStatus.delivered:
-        return Colors.blue;
-      case OrderStatus.rejected:
-        return Colors.red;
-      case OrderStatus.pending:
-        return Colors.orange;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final address = orderModel.shippingAddressModel;
     return Card(
       elevation: 4,
       child: Padding(
@@ -29,6 +18,7 @@ class OrderItemWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Total Price
             Row(
               children: [
                 Text(
@@ -39,13 +29,18 @@ class OrderItemWidget extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
+                // Order Status
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _statusColor(orderModel.status),
+                    color: orderModel.status == OrderEnum.pending
+                        ? Colors.orange
+                        : orderModel.status == OrderEnum.accepted
+                            ? Colors.green
+                            : orderModel.status == OrderEnum.delivered
+                                ? Colors.blue
+                                : Colors.red,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -59,28 +54,33 @@ class OrderItemWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
+
+            // User ID
             Text(
               'User ID: ${orderModel.uId}',
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 8),
+
+            // Shipping Address
             const Text(
               'Shipping Address:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              '${address.name ?? ''}\n'
-              '${address.address ?? ''}, ${address.city ?? ''}\n'
-              '${address.phone ?? ''}\n'
-              '${address.email ?? ''}',
+              orderModel.shippingAddressModel.toString(),
               style: const TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 8),
+
+            // Payment Method
             Text(
               'Payment Method: ${orderModel.paymentMethod}',
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 16),
+
+            // Order Products
             const Text(
               'Products:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -92,20 +92,13 @@ class OrderItemWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = orderModel.orderProducts[index];
                 return ListTile(
-                  leading: Image.network(
-                    product.imageUrl,
-                    width: 48,
-                    height: 48,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return const SizedBox(
+                  leading: CachedNetworkImage(
+                    imageUrl: product.imageUrl,
+                    placeholder: (context, url) => const SizedBox(
                         width: 24,
                         height: 24,
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) =>
+                        child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                   ),
                   title: Text(product.name),
@@ -115,13 +108,14 @@ class OrderItemWidget extends StatelessWidget {
                   trailing: Text(
                     '\$${(product.price * product.quantity).toStringAsFixed(2)}',
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                        fontWeight: FontWeight.bold, color: Colors.green),
                   ),
                 );
               },
             ),
+
+            const SizedBox(height: 16),
+            // OrderActionButtons(orderEntity: orderModel),
           ],
         ),
       ),
