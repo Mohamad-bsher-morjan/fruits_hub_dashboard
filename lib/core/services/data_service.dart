@@ -4,6 +4,11 @@ abstract class DatabaseService {
     Map<String, dynamic> data,
     String? documentId,
   );
+    Future<void> updateData(
+    String path,
+    Map<String, dynamic> data,
+    String? documentId,
+  );
   Future<dynamic> getData({
     required String path,
     String? uId,
